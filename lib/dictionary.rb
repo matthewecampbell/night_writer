@@ -3,6 +3,7 @@ class Dictionary
 attr_reader           :braille_message,
                       :braille_message_by_lines
   def initialize
+    @braille_final = []
     @braille_message = braille_message
     @braille_message_by_lines = braille_message_by_lines
     @english_to_braille = {
@@ -101,6 +102,7 @@ attr_reader           :braille_message,
       "....00" => "-",
       "..00.0" => ".",
       "..0.00" => "?",
+      ".....0" => "",
       ".....00....." => "A",
       ".....00.0..." => "B",
       ".....000...." => "C",
@@ -199,37 +201,42 @@ attr_reader           :braille_message,
     @braille_message_by_lines
   end
 
-  def combine_braille_character_lines_to_one_index
-    @braille_characters = @braille_message_by_lines.transpose
-    @braille_characters
-  end
 
-  def join_braille
-    @braille_final = []
-    @braille_characters.each do |letter|
-      @braille_final << letter.join
+    def combine_braille_character_lines_to_one_index
+      @braille_characters = @braille_message_by_lines.transpose
+      @braille_characters
     end
-    @braille_final
-  end
 
-  def read_braille_to_english
-    braille_translation = ""
-    @braille_final.each do |character|
-      if character == ".....0"
-
-      else
-        braille_translation += @braille_to_english[character]
+    def join_braille
+      @braille_final = []
+      @braille_characters.each do |letter|
+        @braille_final << letter.join
+      end
+      @braille_final
     end
-    braille_translation
-  end
 
-  def translate_braille_to_english(braille)
-    split_braille_into_three_indexes(braille)
-    braille_to_two_character_index
-    combine_braille_character_lines_to_one_index
-    join_braille
-    binding.pry
-    read_braille_to_english
-  end
+    def read_braille_to_english
+      @braille_translation = ""
+      current_val = 0
+      next_val = current_val + 1
+      while current_val != @braille_final.count
+        if @braille_final[current_val] == ".....0"
+          @braille_final[next_val] = @braille_final[current_val] + @braille_final[next_val]
+        else
+          @braille_translation += @braille_to_english[@braille_final[current_val]]
+        end
+        current_val += 1
+        next_val += 1
+      end
+      @braille_translation
+    end
 
-end
+    def translate_braille_to_english(braille)
+      split_braille_into_three_indexes(braille)
+      braille_to_two_character_index
+      combine_braille_character_lines_to_one_index
+      join_braille
+      read_braille_to_english
+    end
+
+  end

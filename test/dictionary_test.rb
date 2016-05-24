@@ -68,6 +68,7 @@ class DictionaryTest < Minitest::Test
     assert_equal ["0.00..", ".00..."], dictionary.join_braille
   end
 
+
   def test_can_translate_whole_braille_word_to_english
     dictionary.split_braille_into_three_indexes("0..0\n000.\n....")
     dictionary.braille_to_two_character_index
@@ -77,10 +78,18 @@ class DictionaryTest < Minitest::Test
   end
 
   def test_can_translate_a_sentence_without_capitals
-    assert_equal "Hello World", dictionary.translate_braille_to_english("0.0.0.0.0....00.0.0.00\n00.00.0..0..00.0000..0\n....0.0.0....00.0.0...")
+    assert_equal "hello world", dictionary.translate_braille_to_english("0.0.0.0.0....00.0.0.00\n00.00.0..0..00.0000..0\n....0.0.0....00.0.0...")
   end
 
-  def test_can_translate_a_sentence_with_capitals
+  def test_can_translate_a_captial_letter
+    assert_equal "A", dictionary.translate_braille_to_english("..0.\n....\n.0..")
+  end
+
+  def test_can_translate_two_capital_letters
+    assert_equal "AA", dictionary.translate_braille_to_english("..0...0.\n........\n.0...0..")
+  end
+
+  def test_can_translate_braille_sentence_with_capitals
     assert_equal "Hello World", dictionary.translate_braille_to_english("..0.0.0.0.0......00.0.0.00\n..00.00.0..0....00.0000..0\n.0....0.0.0....0.00.0.0...")
   end
 end
