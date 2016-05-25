@@ -46,4 +46,8 @@ class NightWriteTest < Minitest::Test
     assert_equal "..0.0.0.0.0......00.0.0.00\n..00.00.0..0....00.0000..0\n.0....0.0.0....0.00.0.0...", night_write.convert_english_to_braille("Hello World")
   end
 
+  def test_can_split_lines_at_eighty_characters
+    assert_equal 80, night_write.translation.length
+  end
+
 end

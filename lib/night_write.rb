@@ -1,8 +1,11 @@
 
 class NightWrite
+  attr_reader              :translation
 
   def initialize
-    @english_to_braille = {
+    @final_output          = []
+    @split_output          = []
+    @english_to_braille    = {
       "a" => ["0.", "..", ".."],
       "b" => ["0.", "0.", ".."],
       "c" => ["00", '..', '..'],
@@ -65,11 +68,6 @@ class NightWrite
     }
   end
 
-  def read
-    read_file = ARGV[0]
-    File.read(read_file)
-  end
-
   def english_to_braille_top_line(letter)
     @english_to_braille[letter][0]
   end
@@ -111,19 +109,63 @@ class NightWrite
 
   def convert_english_to_braille(word)
     whole_word = ""
-    letters = word.split(//)
+    letters = word.chomp.split(//)
     letters.each do |letter|
-      whole_word += english_to_braille_top_line(letter)
+      whole_word += english_to_braille_word_top_line(letter)
     end
     whole_word += "\n"
     letters.each do |letter|
-      whole_word += english_to_braille_middle_line(letter)
+      whole_word += english_to_braille_word_middle_line(letter)
     end
     whole_word += "\n"
     letters.each do |letter|
-      whole_word += english_to_braille_bottom_line(letter)
+      whole_word += english_to_braille_word_bottom_line(letter)
     end
     whole_word
+    split_array = split_lines(whole_word)
+    translation = []
+    split_array.each do |line|
+      translation << line += "\n"
+    end
+    translation.join
   end
 
+  def split_lines(whole_word)
+    new_lines = []
+    braille = whole_word.split("\n")
+    x = braille[0].length
+    while x > 0
+      braille.map do |line|
+        new_line = line.slice!(0..79)
+        new_lines << new_line
+      end
+      x -= 80
+    end
+    new_lines
+  end
+  #   while @translation[0].length / 3 > 80
+  #     current = 0
+  #     whole_word.split("\n").each do |line|
+  #       line = line.scan(/.{1,80}/)
+  #       @final_output += line
+  #       @split_output<< @final_output.pop
+  #       @final_output[current] += "\n"
+  #       @split_output[current] += "\n"
+  #       current += 1
+  #     end
+  #     if @split_output[0].length > 80
+  #       current = 0
+  #       @split_output.each do |line|
+  #         line = line.scan(/.{1,80}/)
+  #         @final_output += line
+  #         @split_output << @final_output.pop
+  #         @final_output[current] += "\n"
+  #         @split_output[current] += "\n"
+  #         current += 1
+  #       end
+  #     end
+  #   end
+  #   @final_output << @split_output
+  #   @final_output.join
+  # end
 end
