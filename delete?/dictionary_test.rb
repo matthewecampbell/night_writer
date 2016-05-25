@@ -1,6 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require_relative '../lib/dictionary'
+require './lib/dictionary'
 require 'pry'
 
 class DictionaryTest < Minitest::Test
@@ -38,11 +38,11 @@ class DictionaryTest < Minitest::Test
     assert_equal "0..0\n000.\n....", dictionary.english_to_braille_whole_word("hi")
   end
 
-  def test_can_translate_word_with_capitals_to_english
+  def test_can_translate_word_with_capitals_to_braille
     assert_equal "..0..0\n..000.\n.0....", dictionary.english_to_braille_whole_word("Hi")
   end
 
-  def test_can_translate_sentences_to_english
+  def test_can_translate_sentences_to_braille
     assert_equal "..0.0.0.0.0......00.0.0.00\n..00.00.0..0....00.0000..0\n.0....0.0.0....0.00.0.0...", dictionary.english_to_braille_whole_word("Hello World")
   end
 
