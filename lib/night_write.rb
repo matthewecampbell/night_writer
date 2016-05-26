@@ -1,9 +1,10 @@
 
 class NightWrite
-  attr_reader              :translation
+  attr_reader              :translation,
+                           :english_to_braille
 
   def initialize
-    @translation           = []
+    @tion                  = []
     @final_output          = []
     @split_output          = []
     @english_to_braille    = {
@@ -99,15 +100,15 @@ class NightWrite
   end
 
   def english_to_braille_top_line(letter)
-    @english_to_braille[letter][0]
+    english_to_braille[letter][0]
   end
 
   def english_to_braille_middle_line(letter)
-    @english_to_braille[letter][1]
+    english_to_braille[letter][1]
   end
 
   def english_to_braille_bottom_line(letter)
-    @english_to_braille[letter][2]
+    english_to_braille[letter][2]
   end
 
   def english_to_braille_word_top_line(word)

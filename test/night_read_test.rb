@@ -8,7 +8,7 @@ class NightReadTest < Minitest::Test
   attr_reader       :night_read
 
   def setup
-    @night_read = NightRead.new
+    @night_read     = NightRead.new
   end
 
   def test_can_split_braille_into_array_with_3_indexes

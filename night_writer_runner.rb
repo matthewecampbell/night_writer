@@ -8,4 +8,3 @@ english_file = File.open(ARGV[1], 'w')
 File.write(english_file, translate)
 
 print "Created '#{ARGV[1]}' containing #{english_file.size} characters"
-#

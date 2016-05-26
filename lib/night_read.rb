@@ -1,8 +1,17 @@
 class NightRead
-  attr_reader :file_reader
+  attr_reader                   :braille_message
+                                :braille_characters
+                                :braille_final
+  attr_accessor                 :braille_message_by_lines
+                                :braille_translation
 
   def initialize
-    @braille_to_english = {
+    @braille_message            = braille_message
+    @braille_translation        = ""
+    @braille_message_by_lines   = []
+    @braille_final              = []
+    @braille_characters         = []
+    @braille_to_english         = {
       "0....." => "a",
       "0.0..." => "b",
       "00...." => "c",
@@ -101,7 +110,6 @@ class NightRead
     other_val = 3
     temp_array = []
     temp_array = braille.split("\n")
-    @braille_message = []
     until temp_array.count == 3
       temp_array[current_val] += temp_array[other_val]
       temp_array.delete_at(other_val)
@@ -115,11 +123,10 @@ class NightRead
   end
 
   def braille_to_two_character_index
-    @braille_message_by_lines = []
-    @braille_message.map do |line|
-      @braille_message_by_lines << line.scan(/../)
+    braille_message.map do |line|
+      braille_message_by_lines << line.scan(/../)
     end
-    @braille_message_by_lines
+    braille_message_by_lines
   end
 
 
@@ -129,7 +136,6 @@ class NightRead
   end
 
   def join_braille
-    @braille_final = []
     @braille_characters.each do |letter|
       @braille_final << letter.join
     end
@@ -137,7 +143,6 @@ class NightRead
   end
 
   def read_braille_to_english
-    @braille_translation = ""
     current_val = 0
     next_val = current_val + 1
     third_val = current_val + 2
@@ -146,8 +151,8 @@ class NightRead
         @braille_final[next_val] = @braille_final[current_val] + @braille_final[next_val]
       elsif @braille_final[current_val] == ".0.000"
         @braille_final[next_val] = @braille_final[current_val] + @braille_final[next_val]
-      # elsif @braille_final[current_val] && @braille_final[third_val] == "......"
-      #   @braille_final[next_val] = @braille_final[current_val] + @braille_final[next_val] + @braille_final[third_val]
+      elsif @braille_final[current_val] && @braille_final[third_val] == "......" && @braille_to_english[@braille_final[current_val] + @braille_final[next_val] + @braille_final[third_val]] == true
+        @braille_final[next_val] = @braille_final[current_val] + @braille_final[next_val] + @braille_final[third_val]
       else
         @braille_translation += @braille_to_english[@braille_final[current_val]]
       end

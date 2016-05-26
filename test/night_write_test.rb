@@ -7,7 +7,7 @@ class NightWriteTest < Minitest::Test
   attr_reader       :night_write
 
   def setup
-    @night_write = NightWrite.new
+    @night_write    = NightWrite.new
   end
 
   def test_look_up_top_line_of_braille_for_letter

@@ -8,8 +8,3 @@ braille_file= File.open(ARGV[1], 'w')
 File.write(braille_file, translate)
 
 print "Created '#{ARGV[1]}' containing #{braille_file.size} characters"
-#
-# File.write((ARGV[1]),File.read(ARGV[0]).convert_english_to_braille)
-# puts "Created #{ARGV[1]} containing #{ARGV.count} characters."
-
-# File.readlines(ARGV[0]).each do |letter|
