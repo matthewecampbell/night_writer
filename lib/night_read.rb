@@ -72,7 +72,26 @@ class NightRead
       ".0.000000..." => "6",
       ".0.0000000.." => "7",
       ".0.0000.00.." => "8",
-      ".0.000.00..." => "9"
+      ".0.000.00..." => "9",
+      "......0.0........." => "but",
+      "......00.........." => "can",
+      "......00.0........" => "do",
+      "......0..0........" => "every",
+      "......000........." => "from",
+      "......0000........" => "go",
+      "......0.00........" => "have",
+      ".......000........" => "just",
+      "......0...0......." => "knowledge",
+      "......0.0.0......." => "like",
+      "......00..0......." => "more",
+      "......00.00......." => "not",
+      "......000.0......." => "people",
+      "......0000.0......" => "quite",
+      "......0.00.0......" => "rather",
+      ".......00.0......." => "so",
+      ".......0000......." => "that",
+      "......0...00......" => "us",
+      "......0.0.00......" => "very"
     }
   end
 
@@ -121,16 +140,20 @@ class NightRead
     @braille_translation = ""
     current_val = 0
     next_val = current_val + 1
+    third_val = current_val + 2
     while current_val != @braille_final.count
       if @braille_final[current_val] == ".....0"
         @braille_final[next_val] = @braille_final[current_val] + @braille_final[next_val]
       elsif @braille_final[current_val] == ".0.000"
         @braille_final[next_val] = @braille_final[current_val] + @braille_final[next_val]
+      # elsif @braille_final[current_val] && @braille_final[third_val] == "......"
+      #   @braille_final[next_val] = @braille_final[current_val] + @braille_final[next_val] + @braille_final[third_val]
       else
         @braille_translation += @braille_to_english[@braille_final[current_val]]
       end
       current_val += 1
       next_val += 1
+      third_val += 1
     end
     @braille_translation
   end
@@ -144,6 +167,6 @@ class NightRead
   end
 
   def numbers_check(braille)
-     braille.include?("")
-   end
+    braille.include?("")
+  end
 end

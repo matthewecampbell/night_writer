@@ -35,18 +35,14 @@ class NightWriteTest < Minitest::Test
   end
 
   def test_can_translate_whole_word_to_english
-    assert_equal "0..0\n000.\n....", night_write.convert_english_to_braille("hi")
+    assert_equal "0..0\n000.\n....\n", night_write.convert_english_to_braille("hi")
   end
 
   def test_can_translate_word_with_capitals_to_braille
-    assert_equal "..0..0\n..000.\n.0....", night_write.convert_english_to_braille("Hi")
+    assert_equal "..0..0\n..000.\n.0....\n", night_write.convert_english_to_braille("Hi")
   end
 
   def test_can_translate_sentences_to_braille
-    assert_equal "..0.0.0.0.0......00.0.0.00\n..00.00.0..0....00.0000..0\n.0....0.0.0....0.00.0.0...", night_write.convert_english_to_braille("Hello World")
-  end
-
-  def test_can_split_lines_at_eighty_characters
-    assert_equal 80, night_write.translation.length
+    assert_equal "..0.0.0.0.0......00.0.0.00\n..00.00.0..0....00.0000..0\n.0....0.0.0....0.00.0.0...\n", night_write.convert_english_to_braille("Hello World")
   end
 end
