@@ -49,5 +49,4 @@ class NightWriteTest < Minitest::Test
   def test_can_split_lines_at_eighty_characters
     assert_equal 80, night_write.translation.length
   end
-
 end

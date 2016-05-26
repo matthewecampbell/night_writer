@@ -64,7 +64,17 @@ class NightWrite
       "W" => ["...0", "..00", ".0.0"],
       "X" => ["..00", "....", ".000"],
       "Y" => ["..00", "...0", ".000"],
-      "Z" => ["..0.", "...0", ".000"]
+      "Z" => ["..0.", "...0", ".000"],
+      "0" => [".0.0.0",".000","00.."],
+      "1" => [".00.",".0..","00.."],
+      "2" => [".00.",".00.","00.."],
+      "3" => [".000",".0..","00.."],
+      "4" => [".000",".0.0","00.."],
+      "5" => [".00.",".0.0","00.."],
+      "6" => [".000",".00.","00.."],
+      "7" => [".000",".000","00.."],
+      "8" => [".00.",".000","00.."],
+      "9" => [".0.0",".00.","00.."]
     }
   end
 
@@ -107,6 +117,20 @@ class NightWrite
     bottom_line
   end
 
+  def split_lines(whole_word)
+    new_lines = []
+    braille = whole_word.split("\n")
+    x = braille[0].length
+    while x > 0
+      braille.map do |line|
+        new_line = line.slice!(0..79)
+        new_lines << new_line
+      end
+      x -= 80
+    end
+    new_lines
+  end
+
   def convert_english_to_braille(word)
     whole_word = ""
     letters = word.chomp.split(//)
@@ -129,43 +153,4 @@ class NightWrite
     end
     translation.join
   end
-
-  def split_lines(whole_word)
-    new_lines = []
-    braille = whole_word.split("\n")
-    x = braille[0].length
-    while x > 0
-      braille.map do |line|
-        new_line = line.slice!(0..79)
-        new_lines << new_line
-      end
-      x -= 80
-    end
-    new_lines
-  end
-  #   while @translation[0].length / 3 > 80
-  #     current = 0
-  #     whole_word.split("\n").each do |line|
-  #       line = line.scan(/.{1,80}/)
-  #       @final_output += line
-  #       @split_output<< @final_output.pop
-  #       @final_output[current] += "\n"
-  #       @split_output[current] += "\n"
-  #       current += 1
-  #     end
-  #     if @split_output[0].length > 80
-  #       current = 0
-  #       @split_output.each do |line|
-  #         line = line.scan(/.{1,80}/)
-  #         @final_output += line
-  #         @split_output << @final_output.pop
-  #         @final_output[current] += "\n"
-  #         @split_output[current] += "\n"
-  #         current += 1
-  #       end
-  #     end
-  #   end
-  #   @final_output << @split_output
-  #   @final_output.join
-  # end
 end

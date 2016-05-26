@@ -63,6 +63,16 @@ class NightRead
       ".....000..00" => "X",
       ".....000.000" => "Y",
       ".....00..000" => "Z",
+      ".0.000.000.." => "0",
+      ".0.0000....." => "1",
+      ".0.0000.0..." => "2",
+      ".0.00000...." => "3",
+      ".0.00000.0.." => "4",
+      ".0.0000..0.." => "5",
+      ".0.000000..." => "6",
+      ".0.0000000.." => "7",
+      ".0.0000.00.." => "8",
+      ".0.000.00..." => "9"
     }
   end
 
@@ -70,19 +80,19 @@ class NightRead
   def split_braille_into_three_indexes(braille)
     current_val = 0
     other_val = 3
-    a = []
-    a = braille.split("\n")
+    temp_array = []
+    temp_array = braille.split("\n")
     @braille_message = []
-    until a.count == 3
-      a[current_val] += a[other_val]
-      a.delete_at(other_val)
+    until temp_array.count == 3
+      temp_array[current_val] += temp_array[other_val]
+      temp_array.delete_at(other_val)
       if current_val == 2
         current_val = 0
       else
         current_val += 1
       end
     end
-    @braille_message = a
+    @braille_message = temp_array
   end
 
   def braille_to_two_character_index
@@ -114,6 +124,8 @@ class NightRead
     while current_val != @braille_final.count
       if @braille_final[current_val] == ".....0"
         @braille_final[next_val] = @braille_final[current_val] + @braille_final[next_val]
+      elsif @braille_final[current_val] == ".0.000"
+        @braille_final[next_val] = @braille_final[current_val] + @braille_final[next_val]
       else
         @braille_translation += @braille_to_english[@braille_final[current_val]]
       end
@@ -130,4 +142,8 @@ class NightRead
     join_braille
     read_braille_to_english
   end
+
+  def numbers_check(braille)
+     braille.include?("")
+   end
 end

@@ -58,4 +58,23 @@ class NightReadTest < Minitest::Test
     assert_equal "Hello World", night_read.convert_braille_to_english("..0.0.0.0.0......00.0.0.00\n..00.00.0..0....00.0000..0\n.0....0.0.0....0.00.0.0...")
   end
 
+  def test_can_get_line_four_to_line_one
+    assert_equal ["0000","..",".."], night_read.split_braille_into_three_indexes("00\n..\n..\n00")
+  end
+
+  def test_can_get_braille_input_to_three_total_lines
+    assert_equal ["0000", "....", "...."], night_read.split_braille_into_three_indexes("00\n..\n..\n00\n..\n..")
+  end
+
+  def test_can_find_numbers
+    assert_equal true, night_read.numbers_check("#1")
+  end
+
+  def test_can_translate_a_number
+    assert_equal "1", night_read.convert_braille_to_english(".00.\n.0..\n00..")
+  end
+
+  def test_can_translate_letters_and_numbers
+    assert_equal "1a2b", night_read.convert_braille_to_english(".00.0..00.0.\n.0.....00.0.\n00....00....")
+  end
 end
